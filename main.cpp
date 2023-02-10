@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+// HERNANDO URIEL TORRES DE LUNA 2030342
 
 struct nodo{
     int numero;
@@ -31,13 +32,16 @@ void insertarElemento(PNODO &p, int num){
 }
 
 void imprimirLista(PNODO &p){
-    PNODO aux = p;
     if (p == nullptr){
         printf("Lista vacia\n");
     } else{
-        while (aux != nullptr){
-            printf("Numero: %d\n", aux->numero);
-            aux = aux->siguiente;
+        if  (p != nullptr){
+            printf("Numero: %d\n", p->numero);
+            if (p->siguiente == nullptr)
+                return;
+            imprimirLista((p->siguiente));
+        } else {
+            return;
         }
     }
 }
@@ -47,15 +51,18 @@ void eliminarElemento(PNODO &p){
         printf("Lista vacia\n");
     } else {
         PNODO actual = p->siguiente;
-        if (actual == nullptr)
+        if (actual == nullptr){
+            free(p);
+            p = nullptr;
             return;
+        }
         PNODO sig = actual->siguiente;
         while (sig->siguiente != nullptr) {
             actual = actual->siguiente;
             sig = sig->siguiente;
         }
         actual->siguiente = nullptr;
-        delete (sig);
+        free(sig);
     }
 }
 
